@@ -1,0 +1,670 @@
+.upload-form-container {
+  margin: 30px 0px 50px 0px;
+}
+
+.upload-form {
+  background-color: white;
+  box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
+  margin: auto;
+  padding: 0px;
+  width: 700px;
+}
+
+.upload-form input[type="text"] {
+  background-color: white;
+  border: none;
+  border-bottom: 1px black solid;
+}
+
+.upload-form input[type="text"]:focus {
+  outline: none;
+}
+
+.upload-form textarea {
+  background-color: white;
+  border: none;
+}
+
+.recipe-name {
+  background-color: rgb(242, 242, 242);
+  display: flex;
+  justify-content: center;
+  padding: 50px 60px 25px 60px;
+}
+
+.recipe-name label {
+  font-size: 30px;
+}
+
+.recipe-name input[type="text"] {
+  font-size: 30px;
+  padding-left: 5px;
+  background-color: rgb(242, 242, 242);
+  height: fit-content;
+  flex-grow: 1;
+}
+
+.time-and-servings {
+  margin-top: 25px;
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.time-and-servings input[type="text"] {
+  height: fit-content;
+  width: 100px;
+  padding-left: 5px;
+}
+
+.ingredients {
+  margin: 30px 50px 30px 50px;
+}
+
+.ingredients label {
+  vertical-align: top;
+}
+
+.ingredients textarea {
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px;
+  border: 1px black solid;
+  border-radius: 10px;
+}
+
+.ingredients textarea:focus {
+  outline: none;
+}
+
+.directions {
+  margin: 30px 50px 25px 50px;
+}
+
+.directions label {
+  vertical-align: top;
+}
+
+.directions textarea {
+  margin-top: 10px;
+  width: 100%;
+  padding: 15px;
+  border: 1px black solid;
+  border-radius: 10px;
+}
+
+.directions textarea:focus {
+  outline: none;
+}
+
+.recipe-image {
+  margin: 25px 50px 20px 50px;
+}
+
+.upload-image-btn {
+  position: relative;
+  height: 40px;
+  border: 0;
+  padding: 10px;
+  width: 160px;
+  font-size: 14px;
+  background: rgb(242, 242, 242);
+  cursor: pointer;
+  outline: none;
+  margin-top: 15px;
+  margin-bottom: 20px;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 5px;
+  color: black;
+}
+
+.upload-image-btn i {
+  margin-right: 5px;
+  font-size: 13px;
+}
+
+.upload-image-btn:hover {
+  background: rgb(230, 230, 230);
+}
+
+.upload-image-btn input[type="file"] {
+  cursor: pointer;
+  position: relative;
+  bottom: 26px;
+  right: 104px;
+  width: 330px;
+  opacity: 0;
+}
+
+.upload-image-btn output {
+  position: relative;
+  bottom: 48px;
+  left: 148px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.submit-upload {
+  display: flex;
+  justify-content: center;
+}
+
+.submit-upload input {
+  width: 250px;
+  border: 0;
+  margin-bottom: 45px;
+  padding: 10px 15px 10px 15px;
+  background: rgb(255, 89, 103);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+  font-size: 14px;
+  cursor: pointer;
+  outline: none;
+  border-radius: 5px;
+  color: white;
+}
+
+.submit-upload input:hover {
+  background: rgb(251, 62, 78);
+}
+
+@media (max-width: 750px) {
+  .upload-form {
+    margin-right: 20px;
+    margin-left: 20px;
+    width: auto;
+  }
+}
+
+@media (max-width: 650px) {
+  .recipe-name label {
+    font-size: 25px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 25px;
+  }
+}
+
+@media (max-width: 650px) {
+  .recipe-name {
+    padding: 35px 60px 25px 60px;
+  }
+
+  .recipe-name label {
+    font-size: 24px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 24px;
+  }
+
+  .time-and-servings label {
+    font-size: 14px;
+  }
+
+  .time-and-servings input[type="text"] {
+    font-size: 14px;
+  }
+
+  .ingredients label {
+    font-size: 14px;
+  }
+
+  .ingredients textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .directions label {
+    font-size: 14px;
+  }
+
+  .directions textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .upload-image-btn {
+    height: 35px;
+    padding: 8px;
+    width: 150px;
+    font-size: 13px;
+  }
+
+  .upload-image-btn i {
+    font-size: 12px;
+  }
+
+  .upload-image-btn input[type="file"] {
+    cursor: pointer;
+    position: relative;
+    bottom: 23px;
+    right: 95px;
+    width: 238px;
+  }
+
+  .upload-image-btn output {
+    position: relative;
+    bottom: 46px;
+    left: 140px;
+    font-size: 13px;
+    font-style: italic;
+  }
+
+  .submit-upload input {
+    width: 200px;
+    padding: 8px 13px 8px 13px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 575px) {
+  .recipe-name {
+    padding: 30px 60px 25px 60px;
+  }
+
+  .recipe-name label {
+    font-size: 20px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 20px;
+  }
+
+  .time-and-servings label {
+    font-size: 14px;
+  }
+
+  .time-and-servings input[type="text"] {
+    font-size: 14px;
+  }
+
+  .ingredients label {
+    font-size: 14px;
+  }
+
+  .ingredients textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .directions label {
+    font-size: 14px;
+  }
+
+  .directions textarea {
+    font-size: 14px;
+    padding: 12px;
+  }
+
+  .submit-upload input {
+    width: 200px;
+    padding: 8px 13px 8px 13px;
+    font-size: 13px;
+  }
+}
+
+@media (max-width: 510px) {
+  .upload-form-container {
+    margin: 20px 0px 50px 0px;
+  }
+
+  .recipe-name {
+    padding: 30px 40px 20px 40px;
+  }
+
+  .recipe-name label {
+    font-size: 16px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 16px;
+  }
+
+  .time-and-servings label {
+    font-size: 12px;
+  }
+
+  .time-and-servings input[type="text"] {
+    width: 70px;
+    font-size: 12px;
+  }
+
+  .ingredients {
+    margin: 30px 30px 30px 30px;
+  }
+
+  .ingredients label {
+    font-size: 12px;
+  }
+
+  .ingredients textarea {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .directions {
+    margin: 30px 30px 30px 30px;
+  }
+
+  .directions label {
+    font-size: 12px;
+  }
+
+  .directions textarea {
+    font-size: 12px;
+    padding: 10px;
+  }
+
+  .submit-upload input {
+    width: 200px;
+    padding: 8px 13px 8px 13px;
+    font-size: 13px;
+  }
+
+  .submit-upload input {
+    width: 170px;
+    padding: 6px 10px 6px 10px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 410px) {
+  .recipe-name {
+    padding: 25px 30px 20px 30px;
+  }
+
+  .recipe-name label {
+    font-size: 13px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 13px;
+  }
+
+  .time-and-servings {
+    margin-top: 20px;
+  }
+
+  .time-and-servings label {
+    font-size: 11px;
+  }
+
+  .time-and-servings input[type="text"] {
+    width: 50px;
+    font-size: 11px;
+  }
+
+  .ingredients {
+    margin: 25px 30px 20px 30px;
+  }
+
+  .ingredients label {
+    font-size: 11px;
+  }
+
+  .ingredients textarea {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .directions {
+    margin: 20px 30px 25px 30px;
+  }
+
+  .directions label {
+    font-size: 11px;
+  }
+
+  .directions textarea {
+    font-size: 11px;
+    padding: 10px;
+  }
+
+  .submit-upload input {
+    margin-bottom: 30px;
+    width: 150px;
+    padding: 4px 8px 4px 8px;
+    font-size: 11px;
+  }
+}
+
+@media (max-width: 340px) {
+  .recipe-name {
+    padding: 25px 30px 20px 30px;
+  }
+
+  .recipe-name label {
+    font-size: 12px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 12px;
+  }
+
+  .time-and-servings {
+    margin-top: 15px;
+  }
+
+  .time-and-servings label {
+    font-size: 10px;
+  }
+
+  .time-and-servings input[type="text"] {
+    width: 35px;
+    font-size: 10px;
+  }
+
+  .ingredients {
+    margin: 20px 25px 15px 25px;
+  }
+
+  .ingredients label {
+    font-size: 10px;
+  }
+
+  .ingredients textarea {
+    margin-top: 5px;
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .directions {
+    margin: 15px 25px 20px 25px;
+  }
+
+  .directions label {
+    font-size: 10px;
+  }
+
+  .directions textarea {
+    margin-top: 5px;
+    font-size: 10px;
+    padding: 8px;
+  }
+
+  .submit-upload input {
+    margin-bottom: 30px;
+    width: 140px;
+    padding: 4px 8px 4px 8px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 325px) {
+  .recipe-name {
+    padding: 25px 20px 20px 20px;
+  }
+
+  .recipe-name label {
+    font-size: 11px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 11px;
+  }
+
+  .time-and-servings label {
+    font-size: 10px;
+  }
+
+  .time-and-servings input[type="text"] {
+    width: 30px;
+  }
+
+  .ingredients {
+    margin: 20px 20px 15px 20px;
+  }
+
+  .ingredients textarea {
+    margin-top: 0px;
+  }
+
+  .directions {
+    margin: 15px 20px 20px 20px;
+  }
+
+  .directions textarea {
+    margin-top: 0px;
+  }
+}
+
+@media (max-width: 290px) {
+  .recipe-name label {
+    font-size: 10px;
+  }
+
+  .recipe-name input[type="text"] {
+    font-size: 10px;
+  }
+}
+
+/*Recipes on Profile*/
+.profile-recipes {
+  margin-top: 20px;
+}
+
+.profile-recipes a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+.profile-recipes ul {
+  list-style-type: none;
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  padding: 0px 30px 30px 30px;
+}
+
+.profile-recipes li {
+  text-align: left;
+  margin: 12px;
+  background-color: rgb(242, 242, 242);
+  border-radius: 10px;
+  box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.profile-recipes img {
+  border-radius: 10px 10px 0px 0px;
+  font-size: 13px;
+  width: 100%;
+  aspect-ratio: 4/ 3;
+  object-fit: cover;
+  font-display: block;
+}
+
+.profile-recipes h4 {
+  font-size: 13px;
+  padding: 10px 10px 5px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile-recipes p {
+  font-size: 13px;
+  padding: 0px 10px 2px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.recipe-stars {
+  font-size: 13px;
+  padding: 0px 10px 10px 11px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.recipe-stars i {
+  font-size: 10px;
+}
+
+@media (max-width: 705px) {
+  .profile-recipes h4 {
+    font-size: 12px;
+  }
+
+  .profile-recipes p {
+    font-size: 12px;
+  }
+
+  .recipe-stars {
+    font-size: 12px;
+  }
+
+  .recipe-stars i {
+    font-size: 9px;
+  }
+}
+
+@media (max-width: 635px) {
+  .profile-recipes ul {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .profile-recipes h4 {
+    font-size: 11px;
+  }
+
+  .profile-recipes p {
+    font-size: 11px;
+  }
+
+  .recipe-stars {
+    font-size: 11px;
+  }
+
+  .recipe-stars i {
+    font-size: 8px;
+  }
+}
+
+@media (max-width: 440px) {
+  .profile-recipes h4 {
+    font-size: 10px;
+  }
+
+  .profile-recipes p {
+    font-size: 10px;
+  }
+
+  .recipe-stars {
+    font-size: 10px;
+  }
+
+  .recipe-stars i {
+    font-size: 7px;
+  }
+}
+
+@media (max-width: 380px) {
+  .profile-recipes ul {
+    grid-template-columns: repeat(auto-fill, minmax(9rem, 1fr));
+  }
+}

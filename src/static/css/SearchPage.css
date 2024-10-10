@@ -1,0 +1,122 @@
+.welcome-msg {
+  text-align: center;
+  background-color: rgb(242, 242, 242);
+  margin: 20px 0px 20px 0px;
+  padding: 25px;
+  font-size: 38px;
+  font-weight: 300;
+}
+
+.welcome-msg p {
+  margin: 0;
+  font-size: 22px;
+  padding-top: 5px;
+}
+
+.homepage-recipes {
+  margin-top: 20px;
+}
+
+.homepage-recipes a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+.homepage-recipes ul {
+  list-style-type: none;
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  padding: 0px 30px 30px 30px;
+}
+
+.homepage-recipes li {
+  text-align: left;
+  margin: 12px;
+  background-color: rgb(242, 242, 242);
+  border-radius: 10px;
+  box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.2);
+}
+
+.homepage-recipes img {
+  border-radius: 10px 10px 0px 0px;
+  font-size: 13px;
+  width: 100%;
+  aspect-ratio: 4/ 3;
+  object-fit: cover;
+  font-display: block;
+}
+
+.homepage-recipes h4 {
+  font-size: 13px;
+  padding: 10px 10px 5px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.homepage-recipes p {
+  font-size: 13px;
+  padding: 0px 10px 2px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+@media (max-width: 780px) {
+  .welcome-msg {
+    font-size: 35px;
+    padding: 22px;
+  }
+
+  .welcome-msg p {
+    font-size: 20px;
+  }
+
+  .homepage-recipes ul {
+    grid-template-columns: repeat(auto-fill, minmax(12rem, 1fr));
+  }
+}
+
+@media (max-width: 635px) {
+  .welcome-msg {
+    font-size: 30px;
+    padding: 18px;
+  }
+
+  .welcome-msg p {
+    font-size: 18px;
+  }
+
+  .homepage-recipes ul {
+    grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  }
+}
+
+@media (max-width: 500px) {
+  .welcome-msg {
+    font-size: 25px;
+    padding: 15px;
+  }
+
+  .welcome-msg p {
+    font-size: 15px;
+  }
+
+  .homepage-recipes ul {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
+}
+
+@media (max-width: 390px) {
+  .welcome-msg {
+    font-size: 20px;
+    padding: 12px;
+  }
+
+  .welcome-msg p {
+    font-size: 12px;
+  }
+}

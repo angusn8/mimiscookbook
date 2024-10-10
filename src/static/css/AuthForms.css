@@ -1,0 +1,396 @@
+.login,
+.register {
+  width: 400px;
+  background-color: #ffffff;
+  box-shadow: 0 0 9px 0 rgba(0, 0, 0, 0.3);
+  margin: 100px auto;
+}
+.login h1,
+.register h1 {
+  text-align: center;
+  color: rgb(255, 89, 103);
+  font-size: 24px;
+  padding: 20px 0 20px 0;
+  border-bottom: 1px solid rgb(255, 89, 103);
+}
+.login .links a,
+.register .links a {
+  display: flex;
+  padding: 0 15px;
+}
+.login .links a,
+.register .links a {
+  color: rgb(255, 89, 103);
+  text-decoration: none;
+  display: inline-flex;
+  padding: 0 10px 10px 10px;
+  font-weight: bold;
+}
+.login .links a:hover,
+.register .links a:hover {
+  color: rgb(255, 89, 103);
+}
+.login .links a.active,
+.register .links a.active {
+  border-bottom: 3px solid rgb(255, 89, 103);
+  color: rgb(255, 89, 103);
+}
+.login form,
+.register form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 20px;
+}
+.login form label,
+.register form label {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  background-color: rgb(255, 89, 103);
+  color: #ffffff;
+}
+.login form input[type="password"],
+.login form input[type="text"],
+.login form input[type="email"],
+.register form input[type="password"],
+.register form input[type="text"],
+.register form input[type="email"] {
+  width: 310px;
+  height: 50px;
+  border: 1px solid #dee0e4;
+  margin-bottom: 20px;
+  padding: 0 15px;
+}
+.login form input[type="submit"],
+.register form input[type="submit"] {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  background-color: rgb(255, 89, 103);
+  border: 0;
+  cursor: pointer;
+  font-weight: bold;
+  color: #ffffff;
+  transition: background-color 0.2s;
+}
+.login form input[type="submit"]:hover,
+.register form input[type="submit"]:hover {
+  background-color: rgb(255, 89, 103);
+  transition: background-color 0.2s;
+}
+
+@media (max-width: 460px) {
+  .login,
+  .register {
+    width: 80%;
+    margin: 100px auto;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 270px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 444px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 260px;
+    height: 50px;
+  }
+}
+
+@media (max-width: 434px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 250px;
+    height: 50px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 15px;
+  }
+}
+
+@media (max-width: 418px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 245px;
+    height: 45px;
+  }
+  .login form label,
+  .register form label {
+    width: 45px;
+    height: 45px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 10px;
+  }
+}
+
+@media (max-width: 400px) {
+  .login h1,
+  .register h1 {
+    font-size: 18pt;
+    padding: 16px 0 16px 0;
+  }
+  .login .links a,
+  .register .links a {
+    font-size: 12pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 235px;
+  }
+}
+
+@media (max-width: 387px) {
+  .login h1,
+  .register h1 {
+    font-size: 16pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 230px;
+    height: 40px;
+  }
+  .login .links a,
+  .register .links a {
+    font-size: 11pt;
+  }
+  .login form label,
+  .register form label {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+@media (max-width: 372px) {
+  .login h1,
+  .register h1 {
+    font-size: 15pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 230px;
+    height: 35px;
+  }
+  .login .links a,
+  .register .links a {
+    font-size: 10pt;
+  }
+  .login form label,
+  .register form label {
+    width: 35px;
+    height: 35px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 8px;
+  }
+  .back-home-link {
+    font-size: 14pt;
+  }
+  .back-home-link i {
+    margin-right: 3px;
+    font-size: 13pt;
+    -webkit-text-stroke: 1px white;
+  }
+}
+
+@media (max-width: 366px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 225px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 355px) {
+  .login h1,
+  .register h1 {
+    font-size: 14pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 225px;
+    height: 30px;
+  }
+  .login form label,
+  .register form label {
+    width: 30px;
+    height: 30px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 6px;
+  }
+}
+
+@media (max-width: 342px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 215px;
+  }
+}
+
+@media (max-width: 334px) {
+  .login h1,
+  .register h1 {
+    font-size: 14pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 208px;
+    height: 30px;
+  }
+  .login .links a,
+  .register .links a {
+    font-size: 10pt;
+  }
+  .login form label,
+  .register form label {
+    width: 30px;
+    height: 30px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 4px;
+  }
+  .back-home-link {
+    font-size: 12pt;
+  }
+  .back-home-link i {
+    margin-right: 3px;
+    font-size: 11pt;
+    -webkit-text-stroke: 1px white;
+  }
+}
+
+@media (max-width: 324px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 200px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 3px;
+    padding: 10px;
+  }
+}
+
+@media (max-width: 314px) {
+  .login h1,
+  .register h1 {
+    font-size: 13pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 193px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 2px;
+    padding: 9px;
+  }
+}
+
+@media (max-width: 303px) {
+  .login h1,
+  .register h1 {
+    font-size: 12pt;
+  }
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 193px;
+    height: 25px;
+  }
+  .login .links a,
+  .register .links a {
+    font-size: 9pt;
+  }
+  .login form label,
+  .register form label {
+    width: 25px;
+    height: 25px;
+  }
+  .login form input[type="submit"],
+  .register form input[type="submit"] {
+    margin-top: 0px;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 290px) {
+  .login form input[type="password"],
+  .login form input[type="text"],
+  .login form input[type="email"],
+  .register form input[type="password"],
+  .register form input[type="text"],
+  .register form input[type="email"] {
+    width: 183px;
+  }
+}

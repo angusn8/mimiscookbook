@@ -1,0 +1,17 @@
+.back-home-link {
+  text-decoration: none;
+  color: rgb(87, 87, 87);
+  margin: 20px 0px 0px 30px;
+  font-size: 15pt;
+  font-weight: 350;
+}
+
+.back-home-link:hover {
+  color: rgb(31, 31, 31);
+}
+
+.back-home-link i {
+  margin-right: 5px;
+  font-size: 14pt;
+  -webkit-text-stroke: 1.1px white;
+}
