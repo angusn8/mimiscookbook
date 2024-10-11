@@ -1,22 +1,80 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./static/css/ProfilePage.css";
 import SearchNavbar from "./components/Navbar";
-import { profile } from "./static/img/blank-profile-picture.webp";
+import { profile as defaultProfileImage } from "./static/img/blank-profile-picture.webp";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faStar,
+  faUserAlt,
+  faEnvelope,
+  faGear,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
+import { connectSupabase } from "./utils/supabase";
 
-const ProfilePage = ({ user, profile, recipes }) => {
+const ProfilePage = ({ user, initialProfile, initialRecipes }) => {
+  const [profile, setProfile] = useState(initialProfile);
+  const [recipes, setRecipes] = useState(initialRecipes);
+  const [loading, setLoading] = useState(!initialProfile);
+  const supabase = connectSupabase();
+
+  useEffect(() => {
+    const fetchProfileAndRecipes = async () => {
+      setLoading(true);
+      if (user) {
+        try {
+          // Fetch profile
+          const { data: profileData, error: profileError } = await supabase
+            .from("profiles")
+            .select("*")
+            .eq("user_id", user.id)
+            .single();
+
+          if (profileError) throw profileError;
+          setProfile(profileData);
+
+          // Fetch recipes
+          const { data: recipesData, error: recipesError } = await supabase
+            .from("recipes")
+            .select("*")
+            .eq("user_id", user.id);
+
+          if (recipesError) throw recipesError;
+          setRecipes(recipesData);
+
+          console.log("Fetched recipes:", recipesData);
+        } catch (error) {
+          console.error("Error fetching data:", error);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProfileAndRecipes();
+  }, [user, supabase]);
+
   const renderStars = (rating) => {
     const stars = [];
     for (let i = 0; i < 5; i++) {
       stars.push(
-        <i key={i} className={`fas fa-star ${i < rating ? "filled" : ""}`}></i>
+        <FontAwesomeIcon
+          key={i}
+          icon={faStar}
+          className={i < rating ? "filled" : ""}
+        />
       );
     }
     return stars;
   };
 
-  if (!profile) {
+  if (loading) {
     return <div>Loading...</div>;
+  }
+
+  if (!profile) {
+    return <div>Error loading profile</div>;
   }
 
   return (
@@ -40,7 +98,7 @@ const ProfilePage = ({ user, profile, recipes }) => {
           <div className="uploadbtn-container">
             <Link to="/recipe/upload">
               <button className="uploadbtn">
-                <i className="fas fa-plus"></i>
+                <FontAwesomeIcon icon={faPlus} />
                 <span className="hide-upload-btn-content">Upload Recipe</span>
               </button>
             </Link>
@@ -48,18 +106,18 @@ const ProfilePage = ({ user, profile, recipes }) => {
         </div>
         <Link to="/profile/update">
           <button className="settingsbtn2">
-            <i className="fa fa-gear"></i>
+            <FontAwesomeIcon icon={faGear} />
           </button>
         </Link>
         <div className="profile-body">
           <div className="left-side">
             <div className="profile-side">
               <p className="user-subscribers">
-                <i className="fas fa-user-alt"></i>
+                <FontAwesomeIcon icon={faUserAlt} />
                 {profile.subscribers} subscribers
               </p>
               <p className="user-email">
-                <i className="fas fa-envelope"></i>
+                <FontAwesomeIcon icon={faEnvelope} />
                 {user.email}
               </p>
               <div className="user-bio">
@@ -75,7 +133,8 @@ const ProfilePage = ({ user, profile, recipes }) => {
               </div>
               <Link to="/profile/update">
                 <button className="settingsbtn1">
-                  <i className="fa fa-gear"></i>Profile Settings
+                  <FontAwesomeIcon icon={faGear} />
+                  Profile Settings
                 </button>
               </Link>
             </div>
@@ -93,23 +152,25 @@ const ProfilePage = ({ user, profile, recipes }) => {
             </div>
             <div className="profile-recipes">
               <ul>
-                {recipes.map((recipe) => (
-                  <Link key={recipe.id} to={`/recipe/${recipe.id}`}>
-                    <li>
-                      <img src={recipe.photo_path} alt="" />
-                      <h4>{recipe.title}</h4>
-                      <p>@{user.username}</p>
-                      <div className="recipe-stars">
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        <i className="fas fa-star"></i>
-                        (0 reviews)
-                      </div>
-                    </li>
-                  </Link>
-                ))}
+                {recipes && recipes.length > 0 ? (
+                  recipes.map((recipe) => (
+                    <Link key={recipe.id} to={`/recipe/${recipe.id}`}>
+                      <li>
+                        <img src={recipe.photo_path} alt="" />
+                        <h4>{recipe.title}</h4>
+                        <p>@{profile.username}</p>
+                        <div className="recipe-stars">
+                          {[...Array(5)].map((_, index) => (
+                            <FontAwesomeIcon key={index} icon={faStar} />
+                          ))}
+                          (0 reviews)
+                        </div>
+                      </li>
+                    </Link>
+                  ))
+                ) : (
+                  <p>No recipes found.</p>
+                )}
               </ul>
             </div>
           </div>

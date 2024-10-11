@@ -1,16 +1,40 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useLocation } from "react-router-dom";
 import "../static/css/Navbar.css";
 import { connectSupabase } from "../utils/supabase";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faSearch, faBars } from "@fortawesome/free-solid-svg-icons";
 
 const SearchNavbar = () => {
   const [query, setQuery] = useState("");
+  const [showMenu, setShowMenu] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
   const supabase = connectSupabase();
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(location.search);
+    const searchQuery = searchParams.get("q");
+    if (searchQuery) {
+      setQuery(searchQuery);
+    }
+  }, [location.search]);
+
+  const handleSearchChange = (e) => {
+    const newQuery = e.target.value;
+    setQuery(newQuery);
+    if (newQuery.trim()) {
+      navigate(`/?q=${encodeURIComponent(newQuery.trim())}`);
+    } else {
+      navigate("/");
+    }
+  };
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
-    navigate(`/search?query=${query}`);
+    if (query.trim()) {
+      navigate(`/?q=${encodeURIComponent(query.trim())}`);
+    }
   };
 
   const handleLogout = async () => {
@@ -20,10 +44,12 @@ const SearchNavbar = () => {
       console.log("Error logging out:", error.message);
     } else {
       console.log("User logged out successfully");
-      // You can redirect the user after logging out, if needed
       window.location.href = "/auth/login";
     }
-    console.log("Logout action");
+  };
+
+  const toggleMenu = () => {
+    setShowMenu(!showMenu);
   };
 
   return (
@@ -42,22 +68,17 @@ const SearchNavbar = () => {
           id="query"
           placeholder="Search.."
           value={query}
-          onChange={(e) => setQuery(e.target.value)}
+          onChange={handleSearchChange}
         />
         <button type="submit">
-          <i className="fa fa-search"></i>
+          <FontAwesomeIcon icon={faSearch} />
         </button>
       </form>
-      <div>
-        <button
-          onClick={() =>
-            document.getElementById("nav-links").classList.toggle("show")
-          }
-          className="nav-bars"
-        >
-          <i className="fas fa-bars"></i>
+      <div className="menu-container">
+        <button onClick={toggleMenu} className="nav-bars">
+          <FontAwesomeIcon icon={faBars} />
         </button>
-        <ul id="nav-links" className="nav-links">
+        <ul className={`nav-links ${showMenu ? "show" : ""}`}>
           <li>
             <a href="#" onClick={handleLogout}>
               Logout

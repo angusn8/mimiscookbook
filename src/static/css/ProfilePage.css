@@ -671,17 +671,19 @@ button.settingsbtn1 i {
   }
 
   button.settingsbtn2 {
-    top: 105px;
-    width: 20px;
-    height: 20px;
-    padding: 0px;
-  }
-
-  button.settingsbtn2 i {
-    font-size: 13px;
+    width: 0;
+    height: 0;
     position: absolute;
-    top: 4px;
-    left: 3.5px;
+    visibility: hidden;
+    border: 0;
+    background: rgb(242, 242, 242);
+    cursor: pointer;
+    outline: none;
+    margin-top: 15px;
+    margin-bottom: 20px;
+    box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    color: black;
   }
 }
 
@@ -730,4 +732,72 @@ button.settingsbtn1 i {
     top: 120px;
     right: 20px;
   }
+}
+
+.profile-recipes {
+  margin-top: 20px;
+}
+
+.profile-recipes a {
+  cursor: pointer;
+  color: black;
+  text-decoration: none;
+}
+
+.profile-recipes a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+.profile-recipes ul {
+  list-style-type: none;
+  display: inline-grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  padding: 0px 30px 30px 30px;
+}
+
+.profile-recipes li {
+  text-align: left;
+  margin: 12px;
+  background-color: rgb(242, 242, 242);
+  border-radius: 10px;
+  box-shadow: 0px 5px 7px 0px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease;
+}
+
+.profile-recipes li:hover {
+  transform: translateY(-5px);
+}
+
+.profile-recipes img {
+  border-radius: 10px 10px 0px 0px;
+  font-size: 13px;
+  width: 100%;
+  aspect-ratio: 4/ 3;
+  object-fit: cover;
+  font-display: block;
+}
+
+.profile-recipes h4 {
+  font-size: 13px;
+  padding: 10px 10px 5px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.profile-recipes p {
+  font-size: 13px;
+  padding: 0px 10px 2px 10px;
+  margin-bottom: 0px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+}
+
+.recipe-stars {
+  font-size: 13px;
+  padding: 0px 10px 10px 10px;
+  color: #ffc107;
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { connectSupabase } from "../utils/supabase";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
@@ -9,14 +9,15 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 const LoginForm = ({ onSubmit, msg }) => {
   const supabase = connectSupabase();
   const navigate = useNavigate();
+  const location = useLocation();
   const [email, setEmail] = useState(null);
   const [password, setPassword] = useState(null);
   const [error, setError] = useState("");
-  const [isLogin, setIsLogin] = useState(true);
+  const [isLogin, setIsLogin] = useState(location.pathname === "/auth/login");
 
-  const toggleForm = () => {
-    setIsLogin((prev) => !prev);
-  };
+  useEffect(() => {
+    setIsLogin(location.pathname === "/auth/login");
+  }, [location]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -43,18 +44,10 @@ const LoginForm = ({ onSubmit, msg }) => {
     <div className="login">
       <h1>Login</h1>
       <div className="links">
-        <Link
-          to="/auth/login"
-          className={isLogin ? "" : "active"}
-          onClick={toggleForm}
-        >
+        <Link to="/auth/login" className={isLogin ? "active" : ""}>
           Login
         </Link>
-        <Link
-          to="/auth/register"
-          className={isLogin ? "active" : ""}
-          onClick={toggleForm}
-        >
+        <Link to="/auth/register" className={!isLogin ? "active" : ""}>
           Register
         </Link>
       </div>

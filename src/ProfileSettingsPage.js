@@ -3,6 +3,13 @@ import { connectSupabase } from "./utils/supabase";
 import SearchNavbar from "./components/Navbar";
 import "./static/css/ProfileSettingsPage.css";
 import { useNavigate } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faSignature,
+  faUser,
+  faEnvelope,
+  faScroll,
+} from "@fortawesome/free-solid-svg-icons";
 
 const ProfileSettingsPage = ({ user, profile }) => {
   const navigate = useNavigate();
@@ -13,7 +20,8 @@ const ProfileSettingsPage = ({ user, profile }) => {
   const [bio, setBio] = useState(profile?.bio || "");
   const [image, setImage] = useState(null);
   const [imageUrl, setImageUrl] = useState(profile?.profile_picture || "");
-  const [loading, setLoading] = useState(true); // Loading state
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   // Handle profile data loading
   useEffect(() => {
@@ -39,63 +47,92 @@ const ProfileSettingsPage = ({ user, profile }) => {
   };
 
   const handleUpload = async () => {
-    if (!image) return;
+    if (!image) return null;
 
-    const { data, error } = await supabase.storage
-      .from("profiles")
-      .upload(`public/${user.id}/avatar.png`, image);
+    try {
+      const fileExt = image.name.split(".").pop();
+      const fileName = `${user.id}${Math.random()}.${fileExt}`;
+      const filePath = `${user.id}/${fileName}`;
 
-    if (error) {
-      console.error("Error uploading image:", error);
-    } else {
-      console.log("Image uploaded successfully:", data);
-      const { publicURL } = supabase.storage
+      const { error: uploadError } = await supabase.storage
         .from("profiles")
-        .getPublicUrl(data.path);
-      await updateProfileImage(publicURL);
+        .upload(filePath, image);
+
+      if (uploadError) throw uploadError;
+
+      const { data: urlData, error: urlError } = supabase.storage
+        .from("profiles")
+        .getPublicUrl(filePath);
+
+      if (urlError) throw urlError;
+
+      return urlData.publicUrl;
+    } catch (error) {
+      console.error("Error uploading image:", error);
+      setError("Failed to upload image. Please try again.");
+      return null;
     }
   };
 
   const updateProfileImage = async (url) => {
-    const { error } = await supabase
-      .from("profiles")
-      .update({ profile_picture: url })
-      .eq("user_id", user.id);
+    try {
+      const { error } = await supabase
+        .from("profiles")
+        .update({ profile_picture: url })
+        .eq("user_id", user.id);
 
-    if (error) {
-      console.error("Error updating profile image:", error);
-    } else {
+      if (error) throw error;
+
       console.log("Profile image updated successfully.");
+    } catch (error) {
+      console.error("Error updating profile image:", error);
+      setError("Failed to update profile image. Please try again.");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    await handleUpload();
+    setError(null);
+    setLoading(true);
 
-    const { error } = await supabase
-      .from("profiles")
-      .update({
-        full_name: fullName,
-        username: username,
-        bio: bio,
-      })
-      .eq("user_id", user.id);
+    try {
+      let newImageUrl = profile.profile_picture; // Default to current profile picture
 
-    if (error) {
-      console.error("Error updating profile:", error);
-    } else {
-      console.log("Profile updated successfully.");
+      if (image) {
+        const imageUrl = await handleUpload();
+        if (imageUrl) {
+          newImageUrl = imageUrl;
+        }
+      }
+
+      const { data, error } = await supabase
+        .from("profiles")
+        .update({
+          full_name: fullName,
+          username: username,
+          bio: bio,
+          profile_picture: newImageUrl, // Add this line to update the profile picture URL
+        })
+        .eq("user_id", user.id);
+
+      if (error) throw error;
+
+      console.log("Profile updated successfully:", data);
       navigate("/profile", {
         state: {
           profile: {
             full_name: fullName,
             username: username,
             bio: bio,
-            profile_picture: imageUrl,
+            profile_picture: newImageUrl,
           },
         },
       });
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      setError("Failed to update profile. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -107,6 +144,7 @@ const ProfileSettingsPage = ({ user, profile }) => {
   return (
     <div>
       <SearchNavbar />
+      {error && <div className="error-message">{error}</div>}
       <form onSubmit={handleSubmit}>
         <div className="profile-settings-box">
           <div className="setting-heading-color">
@@ -128,7 +166,7 @@ const ProfileSettingsPage = ({ user, profile }) => {
             <h3>Name</h3>
           </div>
           <label htmlFor="full_name">
-            <i className="fas fa-signature"></i>
+            <FontAwesomeIcon icon={faSignature} />
           </label>
           <input
             type="text"
@@ -145,7 +183,7 @@ const ProfileSettingsPage = ({ user, profile }) => {
             <h3>Username</h3>
           </div>
           <label htmlFor="username">
-            <i className="fas fa-user"></i>
+            <FontAwesomeIcon icon={faUser} />
           </label>
           <input
             type="text"
@@ -162,7 +200,7 @@ const ProfileSettingsPage = ({ user, profile }) => {
             <h3>Email</h3>
           </div>
           <label htmlFor="email">
-            <i className="fas fa-envelope"></i>
+            <FontAwesomeIcon icon={faEnvelope} />
           </label>
           <input
             type="email"
@@ -179,7 +217,7 @@ const ProfileSettingsPage = ({ user, profile }) => {
             <h3>Bio</h3>
           </div>
           <label htmlFor="bio">
-            <i className="fas fa-scroll"></i>
+            <FontAwesomeIcon icon={faScroll} />
           </label>
           <input
             type="text"
@@ -191,7 +229,12 @@ const ProfileSettingsPage = ({ user, profile }) => {
           />
         </div>
 
-        <input className="change-btn" type="submit" value="Update Profile" />
+        <input
+          className="change-btn"
+          type="submit"
+          value={loading ? "Updating..." : "Update Profile"}
+          disabled={loading}
+        />
       </form>
     </div>
   );

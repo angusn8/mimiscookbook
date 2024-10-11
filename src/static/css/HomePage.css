@@ -49,6 +49,12 @@
   outline: none;
   border-radius: 5px;
   color: white;
+  transition: background-color 0.3s ease; /* Add smooth transition for background color */
+}
+
+.homepage-text-right a:hover {
+  background-color: rgb(255, 70, 85); /* Slightly darker shade on hover */
+  color: white; /* Ensure text remains white on hover */
 }
 
 .sign-in-btn {
