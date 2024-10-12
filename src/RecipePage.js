@@ -1,41 +1,27 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useParams } from "react-router-dom";
-import { connectSupabase } from "./utils/supabase";
 import SearchNavbar from "./components/Navbar";
 import "./static/css/RecipePage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar as fasStar } from "@fortawesome/free-solid-svg-icons";
 import { faStar as farStar } from "@fortawesome/free-regular-svg-icons";
+import { useSupabaseData } from "./utils/useSupabaseData";
 
 const RecipePage = () => {
   const { id } = useParams();
-  const [recipe, setRecipe] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const supabase = connectSupabase();
-
-  useEffect(() => {
-    const fetchRecipe = async () => {
-      try {
-        const { data, error } = await supabase
-          .from("recipes")
-          .select("*")
-          .eq("id", id)
-          .single();
-
-        if (error) throw error;
-
-        setRecipe(data);
-      } catch (error) {
-        setError("Error fetching recipe. Please try again.");
-        console.error("Error:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipe();
-  }, [id]);
+  const {
+    data: recipe,
+    loading,
+    error,
+  } = useSupabaseData(`recipe_${id}`, async (supabase) => {
+    const { data, error } = await supabase
+      .from("recipes")
+      .select("*")
+      .eq("id", id)
+      .single();
+    if (error) throw error;
+    return data;
+  });
 
   const renderStars = (rating) => {
     return [...Array(5)].map((_, index) => (
@@ -48,7 +34,7 @@ const RecipePage = () => {
   };
 
   if (loading) return <div>Loading...</div>;
-  if (error) return <div>{error}</div>;
+  if (error) return <div>Error: {error.message}</div>;
   if (!recipe) return <div>Recipe not found.</div>;
 
   return (

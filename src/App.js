@@ -8,17 +8,14 @@ import ProfileSettingsPage from "./ProfileSettingsPage";
 import AuthPage from "./AuthPage";
 import UploadRecipePage from "./UploadRecipePage";
 import RecipePage from "./RecipePage";
+import { useSupabaseData } from "./utils/useSupabaseData";
 
 const App = () => {
   const supabase = connectSupabase();
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [profile, setProfile] = useState(null);
-  const [error, setError] = useState("");
 
   useEffect(() => {
-    connectSupabase();
-
     const checkUser = async () => {
       const {
         data: { session },
@@ -40,29 +37,40 @@ const App = () => {
     };
   }, []);
 
-  useEffect(() => {
-    const fetchProfile = async () => {
-      if (user) {
-        try {
-          const { data, error } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("user_id", user.id)
-            .single();
+  const {
+    data: profile,
+    error: profileError,
+    loading: profileLoading,
+  } = useSupabaseData(`profile_${user?.id}`, async (supabase) => {
+    if (user) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+      if (error) throw error;
+      return data;
+    }
+    return null;
+  });
 
-          if (error) throw error;
-          setProfile(data);
-        } catch (error) {
-          console.error("Error fetching profile:", error.message);
-        }
-      }
-    };
+  const {
+    data: recipes,
+    error: recipesError,
+    loading: recipesLoading,
+  } = useSupabaseData("allRecipes", async (supabase) => {
+    const { data, error } = await supabase.from("recipes").select("*");
+    if (error) throw error;
+    return data;
+  });
 
-    fetchProfile();
-  }, [user]);
-
-  if (loading) {
+  if (loading || profileLoading || recipesLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (profileError || recipesError) {
+    console.error("Error loading data:", profileError || recipesError);
+    return <div>Error loading data. Please try again.</div>;
   }
 
   return (
@@ -71,12 +79,18 @@ const App = () => {
         <Route
           path="/"
           element={
-            user ? <SearchPage user={user} profile={profile} /> : <HomePage />
+            user ? (
+              <SearchPage user={user} profile={profile} recipes={recipes} />
+            ) : (
+              <HomePage />
+            )
           }
         />
         <Route
           path="/profile"
-          element={<ProfilePage user={user} profile={profile} />}
+          element={
+            <ProfilePage user={user} profile={profile} recipes={recipes} />
+          }
         />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/auth/register" element={<AuthPage />} />
@@ -85,8 +99,11 @@ const App = () => {
           path="/profile/update"
           element={<ProfileSettingsPage user={user} profile={profile} />}
         />
-        <Route path="/recipe/upload" element={<UploadRecipePage />} />
-        <Route path="/recipe/:id" element={<RecipePage />} />
+        <Route
+          path="/recipe/upload"
+          element={<UploadRecipePage user={user} profile={profile} />}
+        />
+        <Route path="/recipe/:id" element={<RecipePage recipes={recipes} />} />
       </Routes>
     </Router>
   );

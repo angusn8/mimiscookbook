@@ -4,47 +4,24 @@ import SearchNavbar from "./components/Navbar";
 import "./static/css/SearchPage.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
-import { connectSupabase } from "./utils/supabase";
 
-const SearchPage = ({ user, profile }) => {
+const SearchPage = ({ user, profile, recipes }) => {
   const location = useLocation();
-  const [recipes, setRecipes] = useState([]);
   const [filteredRecipes, setFilteredRecipes] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const supabase = connectSupabase();
-
-  useEffect(() => {
-    const fetchRecipes = async () => {
-      try {
-        const { data, error } = await supabase.from("recipes").select("*");
-        if (error) throw error;
-        setRecipes(data);
-        setFilteredRecipes(data);
-      } catch (error) {
-        console.error("Error fetching recipes:", error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchRecipes();
-  }, []);
 
   useEffect(() => {
     const query = new URLSearchParams(location.search).get("q");
-    if (query) {
-      const filtered = recipes.filter((recipe) =>
-        recipe.title.toLowerCase().startsWith(query.toLowerCase())
-      );
-      setFilteredRecipes(filtered);
-    } else {
-      setFilteredRecipes(recipes);
+    if (recipes) {
+      if (query) {
+        const filtered = recipes.filter((recipe) =>
+          recipe.title.toLowerCase().startsWith(query.toLowerCase())
+        );
+        setFilteredRecipes(filtered);
+      } else {
+        setFilteredRecipes(recipes);
+      }
     }
   }, [location.search, recipes]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (!profile) {
     return <div>Loading profile...</div>;

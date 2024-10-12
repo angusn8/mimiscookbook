@@ -10,27 +10,42 @@ import {
   faEnvelope,
   faScroll,
 } from "@fortawesome/free-solid-svg-icons";
+import { useSupabaseData } from "./utils/useSupabaseData";
 
-const ProfileSettingsPage = ({ user, profile }) => {
+const ProfileSettingsPage = ({ user }) => {
   const navigate = useNavigate();
   const supabase = connectSupabase();
-  const [fullName, setFullName] = useState(profile?.full_name || "");
-  const [username, setUsername] = useState(profile?.username || "");
+  const [fullName, setFullName] = useState("");
+  const [username, setUsername] = useState("");
   const [email, setEmail] = useState(user?.email || "");
-  const [bio, setBio] = useState(profile?.bio || "");
+  const [bio, setBio] = useState("");
   const [image, setImage] = useState(null);
-  const [imageUrl, setImageUrl] = useState(profile?.profile_picture || "");
-  const [loading, setLoading] = useState(true);
+  const [imageUrl, setImageUrl] = useState("");
   const [error, setError] = useState(null);
 
-  // Handle profile data loading
+  const {
+    data: profile,
+    loading,
+    error: profileError,
+  } = useSupabaseData(`profile_${user?.id}`, async (supabase) => {
+    if (user) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+      if (error) throw error;
+      return data;
+    }
+    return null;
+  });
+
   useEffect(() => {
     if (profile) {
       setFullName(profile.full_name);
       setUsername(profile.username);
       setBio(profile.bio);
       setImageUrl(profile.profile_picture);
-      setLoading(false); // Stop loading once profile is loaded
     }
   }, [profile]);
 
@@ -93,7 +108,6 @@ const ProfileSettingsPage = ({ user, profile }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError(null);
-    setLoading(true);
 
     try {
       let newImageUrl = profile.profile_picture; // Default to current profile picture
@@ -131,8 +145,6 @@ const ProfileSettingsPage = ({ user, profile }) => {
     } catch (error) {
       console.error("Error updating profile:", error);
       setError("Failed to update profile. Please try again.");
-    } finally {
-      setLoading(false);
     }
   };
 

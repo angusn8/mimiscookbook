@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import "./static/css/ProfilePage.css";
 import SearchNavbar from "./components/Navbar";
@@ -11,49 +11,41 @@ import {
   faGear,
   faPlus,
 } from "@fortawesome/free-solid-svg-icons";
-import { connectSupabase } from "./utils/supabase";
+import { useSupabaseData } from "./utils/useSupabaseData";
 
-const ProfilePage = ({ user, initialProfile, initialRecipes }) => {
-  const [profile, setProfile] = useState(initialProfile);
-  const [recipes, setRecipes] = useState(initialRecipes);
-  const [loading, setLoading] = useState(!initialProfile);
-  const supabase = connectSupabase();
+const ProfilePage = ({ user, initialProfile }) => {
+  const {
+    data: profile,
+    loading: profileLoading,
+    error: profileError,
+  } = useSupabaseData(`profile_${user?.id}`, async (supabase) => {
+    if (user) {
+      const { data, error } = await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", user.id)
+        .single();
+      if (error) throw error;
+      return data;
+    }
+    return null;
+  });
 
-  useEffect(() => {
-    const fetchProfileAndRecipes = async () => {
-      setLoading(true);
-      if (user) {
-        try {
-          // Fetch profile
-          const { data: profileData, error: profileError } = await supabase
-            .from("profiles")
-            .select("*")
-            .eq("user_id", user.id)
-            .single();
-
-          if (profileError) throw profileError;
-          setProfile(profileData);
-
-          // Fetch recipes
-          const { data: recipesData, error: recipesError } = await supabase
-            .from("recipes")
-            .select("*")
-            .eq("user_id", user.id);
-
-          if (recipesError) throw recipesError;
-          setRecipes(recipesData);
-
-          console.log("Fetched recipes:", recipesData);
-        } catch (error) {
-          console.error("Error fetching data:", error);
-        } finally {
-          setLoading(false);
-        }
-      }
-    };
-
-    fetchProfileAndRecipes();
-  }, [user, supabase]);
+  const {
+    data: recipes,
+    loading: recipesLoading,
+    error: recipesError,
+  } = useSupabaseData(`user_recipes_${user?.id}`, async (supabase) => {
+    if (user) {
+      const { data, error } = await supabase
+        .from("recipes")
+        .select("*")
+        .eq("user_id", user.id);
+      if (error) throw error;
+      return data;
+    }
+    return [];
+  });
 
   const renderStars = (rating) => {
     const stars = [];
@@ -69,8 +61,12 @@ const ProfilePage = ({ user, initialProfile, initialRecipes }) => {
     return stars;
   };
 
-  if (loading) {
+  if (profileLoading || recipesLoading) {
     return <div>Loading...</div>;
+  }
+
+  if (profileError || recipesError) {
+    return <div>Error loading profile or recipes</div>;
   }
 
   if (!profile) {
